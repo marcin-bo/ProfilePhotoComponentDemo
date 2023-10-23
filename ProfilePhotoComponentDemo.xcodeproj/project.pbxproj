@@ -100,13 +100,14 @@
 		5A098D862AE6A3F4001A8423 /* ProfilePhotoComponentDemo */ = {
 			isa = PBXGroup;
 			children = (
-				5A098DB82AE6A99B001A8423 /* ProfilePhotoComponentDemo.entitlements */,
+				5A098E082AE6C274001A8423 /* Packages */,
+				5A098DDB2AE6AC7B001A8423 /* View Controllers */,
+				5A098DDC2AE6ADA3001A8423 /* Storyboards */,
+				5A098DDD2AE6ADB0001A8423 /* Resources */,
+				5A098DDA2AE6AAFE001A8423 /* Supporting Files */,
 				5A098D872AE6A3F4001A8423 /* AppDelegate.swift */,
 				5A098D892AE6A3F4001A8423 /* SceneDelegate.swift */,
-				5A098D8B2AE6A3F4001A8423 /* ViewController.swift */,
-				5A098D8D2AE6A3F4001A8423 /* Main.storyboard */,
-				5A098D902AE6A3F6001A8423 /* Assets.xcassets */,
-				5A098D922AE6A3F6001A8423 /* LaunchScreen.storyboard */,
+				5A098DB82AE6A99B001A8423 /* ProfilePhotoComponentDemo.entitlements */,
 				5A098D952AE6A3F6001A8423 /* Info.plist */,
 			);
 			path = ProfilePhotoComponentDemo;
@@ -127,6 +128,45 @@
 				5A098DAA2AE6A3F6001A8423 /* ProfilePhotoComponentDemoUITestsLaunchTests.swift */,
 			);
 			path = ProfilePhotoComponentDemoUITests;
+			sourceTree = "<group>";
+		};
+		5A098DDA2AE6AAFE001A8423 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5A098DDB2AE6AC7B001A8423 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5A098D8B2AE6A3F4001A8423 /* ViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		5A098DDC2AE6ADA3001A8423 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				5A098D8D2AE6A3F4001A8423 /* Main.storyboard */,
+				5A098D922AE6A3F6001A8423 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		5A098DDD2AE6ADB0001A8423 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5A098D902AE6A3F6001A8423 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5A098E082AE6C274001A8423 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
