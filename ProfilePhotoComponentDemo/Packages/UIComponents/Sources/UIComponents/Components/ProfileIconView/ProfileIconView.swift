@@ -33,9 +33,9 @@ public final class ProfileIconView: UIView {
     private var gradientLayer: CAGradientLayer?
     private var cornerRadiusRatio: CGFloat = 0
     
-    public required init(profileIcon: ProfileIcon) {
+    public required init(frame: CGRect, profileIcon: ProfileIcon) {
         self.profileIcon = profileIcon
-        super.init(frame: .zero)
+        super.init(frame: frame)
         setupSubviews()
         updateView()
     }
