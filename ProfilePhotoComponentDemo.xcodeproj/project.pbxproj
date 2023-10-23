@@ -50,6 +50,7 @@
 		5A098DA82AE6A3F6001A8423 /* ProfilePhotoComponentDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoComponentDemoUITests.swift; sourceTree = "<group>"; };
 		5A098DAA2AE6A3F6001A8423 /* ProfilePhotoComponentDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoComponentDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5A098DB82AE6A99B001A8423 /* ProfilePhotoComponentDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProfilePhotoComponentDemo.entitlements; sourceTree = "<group>"; };
+		5A098E092AE6C2B6001A8423 /* UIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIComponents; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +166,7 @@
 		5A098E082AE6C274001A8423 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				5A098E092AE6C2B6001A8423 /* UIComponents */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
