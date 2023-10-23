@@ -26,10 +26,15 @@ extension XCTestCase {
         }
         results.forEach { XCTAssertNil($0) }
     }
-    
     /// Devices which are used in Snapshot tests
+#if targetEnvironment(macCatalyst)
+    private static let devices: [String: ViewImageConfig] = [
+        "iPadMini": .iPadMini
+    ]
+#else
     private static let devices: [String: ViewImageConfig] = [
         "iPhoneX": .iPhoneX,
         "iPhoneSe": .iPhoneSe
     ]
+#endif
 }
