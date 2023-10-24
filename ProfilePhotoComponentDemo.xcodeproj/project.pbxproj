@@ -16,6 +16,7 @@
 		5A098D9F2AE6A3F6001A8423 /* ProfilePhotoComponentDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A098D9E2AE6A3F6001A8423 /* ProfilePhotoComponentDemoTests.swift */; };
 		5A098DA92AE6A3F6001A8423 /* ProfilePhotoComponentDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A098DA82AE6A3F6001A8423 /* ProfilePhotoComponentDemoUITests.swift */; };
 		5A098DAB2AE6A3F6001A8423 /* ProfilePhotoComponentDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A098DAA2AE6A3F6001A8423 /* ProfilePhotoComponentDemoUITestsLaunchTests.swift */; };
+		5A11BBFD2AE85D0000BC3771 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 5A11BBFC2AE85D0000BC3771 /* UIComponents */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A11BBFD2AE85D0000BC3771 /* UIComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +87,7 @@
 				5A098D9D2AE6A3F6001A8423 /* ProfilePhotoComponentDemoTests */,
 				5A098DA72AE6A3F6001A8423 /* ProfilePhotoComponentDemoUITests */,
 				5A098D852AE6A3F4001A8423 /* Products */,
+				5A11BBFB2AE85D0000BC3771 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,6 +174,13 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
+		5A11BBFB2AE85D0000BC3771 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -187,6 +197,9 @@
 			dependencies = (
 			);
 			name = ProfilePhotoComponentDemo;
+			packageProductDependencies = (
+				5A11BBFC2AE85D0000BC3771 /* UIComponents */,
+			);
 			productName = ProfilePhotoComponentDemo;
 			productReference = 5A098D842AE6A3F4001A8423 /* ProfilePhotoComponentDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -666,6 +679,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5A11BBFC2AE85D0000BC3771 /* UIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIComponents;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5A098D7C2AE6A3F4001A8423 /* Project object */;
 }
