@@ -10,7 +10,7 @@ import UIKit
 final class SelectedColorView: UIView {
     var currentColor: UIColor {
         didSet {
-            updateView()
+            updateAppearance()
         }
     }
     
@@ -22,7 +22,7 @@ final class SelectedColorView: UIView {
         self.currentColor = currentColor
         super.init(frame: frame)
         setupSubviews()
-        updateView()
+        updateAppearance()
     }
     
     @available(*, unavailable)
@@ -30,6 +30,14 @@ final class SelectedColorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = self.frame.height / 2
+    }
+}
+
+// MARK: Methods for setting the view hierarchy and appearance
+extension SelectedColorView {
     private func setupSubviews() {
         // arrowImageView
         addSubview(arrowImageView)
@@ -43,19 +51,15 @@ final class SelectedColorView: UIView {
         arrowImageView.widthAnchor.constraint(equalTo: arrowImageView.heightAnchor, multiplier: 1).isActive = true
     }
     
-    private func updateView() {
+    private func updateAppearance() {
         let borderColor: UIColor = calculateBorderAndTintColor(for: currentColor)
         layer.backgroundColor = currentColor.cgColor
         layer.borderWidth = Constants.borderViewWidth
         layer.borderColor = borderColor.cgColor
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.cornerRadius = self.frame.height / 2
-    }
 }
 
+// MARK: Factory methods for subviews
 extension SelectedColorView {
     private func makeArrowImageView() -> UIImageView {
         let imageView = UIImageView()
@@ -71,7 +75,10 @@ extension SelectedColorView {
     private func calculateBorderAndTintColor(for backgroundColor: UIColor) -> UIColor {
         backgroundColor == .white ? .black : .white
     }
-    
+}
+
+// MARK: Constants
+extension SelectedColorView {
     private enum Constants {
         static let defaultSpacing: CGFloat = 8
         static let borderViewWidth: CGFloat = 2

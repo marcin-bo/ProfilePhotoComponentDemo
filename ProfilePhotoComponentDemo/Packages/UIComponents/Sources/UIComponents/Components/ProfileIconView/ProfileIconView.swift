@@ -8,12 +8,14 @@
 import UIKit
 
 public final class ProfileIconView: UIView {
+    // MARK: Data
     private var profileIcon: ProfileIcon {
         didSet {
             updateView()
         }
     }
     
+    // MARK: Subviews
     private lazy var contentView: UIView = {
         UIView()
     }()
@@ -30,9 +32,11 @@ public final class ProfileIconView: UIView {
         makeInitialsLabel()
     }()
     
+    // MARK: Vars
     private var gradientLayer: CAGradientLayer?
     private var cornerRadiusRatio: CGFloat = 0
     
+    // MARK: Methods
     public required init(frame: CGRect, profileIcon: ProfileIcon) {
         self.profileIcon = profileIcon
         super.init(frame: frame)
@@ -45,8 +49,40 @@ public final class ProfileIconView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        initialsLabel.font = UIFont.systemFont(ofSize: contentView.frame.height / 2, weight: .bold)
+    }
+    
+    public override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        
+        switch profileIcon {
+        case .solid(_):
+            contentView.layer.cornerRadius = contentView.frame.height * cornerRadiusRatio
+        case .gradient(_):
+            gradientLayer?.frame = contentView.bounds
+            gradientLayer?.cornerRadius = contentView.frame.height * cornerRadiusRatio
+        case .image(_):
+            backgroundImageView.layer.cornerRadius = contentView.frame.height * cornerRadiusRatio
+        }
+    }
+    
+    public func update(profileIcon: ProfileIcon) {
+        self.profileIcon = profileIcon
+    }
+}
+
+// MARK: Methods for setting the view hierarchy
+extension ProfileIconView {
     private func setupSubviews() {
-        // contentView
+        setupContentView()
+        setupInitialsLabel()
+        setupGradientView()
+        setupBackgroundImageView()
+    }
+    
+    private func setupContentView() {
         addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -54,24 +90,27 @@ public final class ProfileIconView: UIView {
         contentView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         contentView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         contentView.widthAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1).isActive = true
-        
-        // initialsLabel
+    }
+    
+    private func setupInitialsLabel() {
         contentView.addSubview(initialsLabel)
         initialsLabel.translatesAutoresizingMaskIntoConstraints = false
         initialsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         initialsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         initialsLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5).isActive = true
         initialsLabel.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, multiplier: 0.8).isActive = true
-        
-        // gradientView
+    }
+    
+    private func setupGradientView() {
         contentView.insertSubview(gradientView, belowSubview: initialsLabel)
         gradientView.translatesAutoresizingMaskIntoConstraints = false
         gradientView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         gradientView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         gradientView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         gradientView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        
-        // backgroundImageView
+    }
+    
+    private func setupBackgroundImageView() {
         contentView.addSubview(backgroundImageView)
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
@@ -79,10 +118,6 @@ public final class ProfileIconView: UIView {
         backgroundImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         backgroundImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         backgroundImageView.widthAnchor.constraint(equalTo: backgroundImageView.heightAnchor, multiplier: 1).isActive = true
-    }
-    
-    public func update(profileIcon: ProfileIcon) {
-        self.profileIcon = profileIcon
     }
     
     private func updateView() {
@@ -143,27 +178,9 @@ public final class ProfileIconView: UIView {
         backgroundImageView.isHidden = true
         backgroundImageView.image = nil
     }
-    
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        initialsLabel.font = UIFont.systemFont(ofSize: contentView.frame.height / 2, weight: .bold)
-    }
-    
-    public override func layoutSublayers(of layer: CALayer) {
-        super.layoutSublayers(of: layer)
-        
-        switch profileIcon {
-        case .solid(_):
-            contentView.layer.cornerRadius = contentView.frame.height * cornerRadiusRatio
-        case .gradient(_):
-            gradientLayer?.frame = contentView.bounds
-            gradientLayer?.cornerRadius = contentView.frame.height * cornerRadiusRatio
-        case .image(_):
-            backgroundImageView.layer.cornerRadius = contentView.frame.height * cornerRadiusRatio
-        }
-    }
 }
 
+// MARK: Factory methods for subviews
 extension ProfileIconView {
     private func makeInitialsLabel() -> UILabel {
         let initialsLabel = UILabel()
@@ -188,7 +205,10 @@ extension ProfileIconView {
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 1.0)
         return gradientLayer
     }
-    
+}
+
+// MARK: Constants
+extension ProfileIconView {
     private enum CornerRadiusRatio {
         /// Used to calculate layer corner radius.
         /// The value is a multiplier of view height:
