@@ -6,10 +6,10 @@ final class ProfileIconViewSnapshotTests: XCTestCase {
 
     func test_renderSolidBackgroundInRoundedSquare() {
         let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        let widgetView = ProfileIconView(frame: frame, profileIcon: makeSolidProfileIcon())
+        let view = ProfileIconView(frame: frame, profileIcon: makeSolidProfileIcon())
 
         verifyView(
-            widgetView,
+            view,
             viewName: "ProfileIconView",
             stateName: "solidRoundedSquare",
             isRecording: isRecording)
@@ -17,10 +17,10 @@ final class ProfileIconViewSnapshotTests: XCTestCase {
 
     func test_renderGradientBackgroundInRoundedSquare() {
         let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        let widgetView = ProfileIconView(frame: frame, profileIcon: makeGradientProfileIcon())
+        let view = ProfileIconView(frame: frame, profileIcon: makeGradientProfileIcon())
 
         verifyView(
-            widgetView,
+            view,
             viewName: "ProfileIconView",
             stateName: "gradientRoundedSquare",
             isRecording: isRecording)
@@ -28,10 +28,10 @@ final class ProfileIconViewSnapshotTests: XCTestCase {
 
     func test_renderImageBackgroundInRoundedSquare() {
         let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        let widgetView = ProfileIconView(frame: frame, profileIcon: makeImageProfileIcon())
+        let view = ProfileIconView(frame: frame, profileIcon: makeImageProfileIcon())
 
         verifyView(
-            widgetView,
+            view,
             viewName: "ProfileIconView",
             stateName: "imageRoundedSquare",
             isRecording: isRecording)
@@ -39,11 +39,11 @@ final class ProfileIconViewSnapshotTests: XCTestCase {
     
     func test_renderSolidBackgroundInCircle() {
         let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        let widgetView = ProfileIconView(frame: frame, profileIcon: makeSolidProfileIcon(isCircle: true))
-        widgetView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+        let view = ProfileIconView(frame: frame, profileIcon: makeSolidProfileIcon(isCircle: true))
+        view.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
 
         verifyView(
-            widgetView,
+            view,
             viewName: "ProfileIconView",
             stateName: "solidCircle",
             isRecording: isRecording)
@@ -51,11 +51,11 @@ final class ProfileIconViewSnapshotTests: XCTestCase {
 
     func test_renderGradientBackgroundInCircle() {
         let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        let widgetView = ProfileIconView(frame: frame, profileIcon: makeGradientProfileIcon(isCircle: true))
-        widgetView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+        let view = ProfileIconView(frame: frame, profileIcon: makeGradientProfileIcon(isCircle: true))
+        view.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
 
         verifyView(
-            widgetView,
+            view,
             viewName: "ProfileIconView",
             stateName: "gradientCircle",
             isRecording: isRecording)
@@ -63,11 +63,10 @@ final class ProfileIconViewSnapshotTests: XCTestCase {
 
     func test_renderImageBackgroundInCircle() {
         let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-        let widgetView = ProfileIconView(frame: frame, profileIcon: makeImageProfileIcon(isCircle: true))
-        widgetView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+        let view = ProfileIconView(frame: frame, profileIcon: makeImageProfileIcon(isCircle: true))
 
         verifyView(
-            widgetView,
+            view,
             viewName: "ProfileIconView",
             stateName: "imageCircle",
             isRecording: isRecording)
