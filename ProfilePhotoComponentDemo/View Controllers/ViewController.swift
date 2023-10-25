@@ -52,7 +52,7 @@ extension ViewController {
             .removeDuplicates()
             .dropFirst()
             .sink { [weak self] color in
-                self?.colorPickerViewModel?.input.update(currentColor: color)
+                self?.colorPickerViewModel?.update(currentColor: color)
             }
         
         self.present(picker, animated: true, completion: nil)

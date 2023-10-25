@@ -18,7 +18,7 @@ public final class ColorPickerViewController: UIViewController {
     }()
     
     lazy var titleLabel: UILabel = {
-        makeTitleLabel(title: viewModel.output.title)
+        makeTitleLabel(title: viewModel.title)
     }()
     
     lazy var selectedColorView: SelectedColorView = {
@@ -52,12 +52,11 @@ public final class ColorPickerViewController: UIViewController {
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
-        viewModel.input.didTapColorSelector(viewModel.output.currentColor)
+        viewModel.didTapColorSelector(viewModel.currentColor)
     }
     
     private func bind() {
         self.cancellable = viewModel
-            .output
             .currentColorPublisher
             .receive(on: DispatchQueue.main)
             .dropFirst()
@@ -119,7 +118,7 @@ extension ColorPickerViewController {
     }
     
     private func makeSelectedColorView() -> SelectedColorView {
-        SelectedColorView(frame: .zero, currentColor: viewModel.output.currentColor)
+        SelectedColorView(frame: .zero, currentColor: viewModel.currentColor)
     }
 }
 

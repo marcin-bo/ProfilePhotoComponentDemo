@@ -10,23 +10,18 @@ import class Combine.AnyCancellable
 import struct Combine.Published
 import class UIKit.UIColor
 
-public protocol ColorPickerViewModelInput {
+public protocol ColorPickerViewModelType {
+    // Output
+    var title: String { get }
+    var currentColor: UIColor { get set }
+    var currentColorPublisher: Published<UIColor>.Publisher { get }
+    
+    // Input
     var didTapColorSelector: (UIColor) -> Void { get }
     func update(currentColor: UIColor)
 }
 
-public protocol ColorPickerViewModelOutput {
-    var title: String { get }
-    var currentColor: UIColor { get set }
-    var currentColorPublisher: Published<UIColor>.Publisher { get }
-}
-
-public protocol ColorPickerViewModelType {
-    var input: ColorPickerViewModelInput { get }
-    var output: ColorPickerViewModelOutput { get }
-}
-
-public final class ColorPickerViewModel: ColorPickerViewModelInput, ColorPickerViewModelOutput {
+public final class ColorPickerViewModel: ColorPickerViewModelType {
     // Output
     public let title: String
     @Published public var currentColor: UIColor
@@ -45,14 +40,5 @@ public final class ColorPickerViewModel: ColorPickerViewModelInput, ColorPickerV
     
     public func update(currentColor: UIColor) {
         self.currentColor = currentColor
-    }
-}
-
-extension ColorPickerViewModel: ColorPickerViewModelType {
-    public var input: ColorPickerViewModelInput {
-        return self
-    }
-    public var output: ColorPickerViewModelOutput {
-        return self
     }
 }
