@@ -43,6 +43,7 @@ extension GradientColorPickerViewController {
         setupStackView()
         setupStartColorPickerView()
         setupEndColorPickerView()
+        applySameWidthConditionForTitles()
     }
     
     private func setupStackView() {
@@ -54,7 +55,7 @@ extension GradientColorPickerViewController {
         stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
-    func setupStartColorPickerView() {
+    private func setupStartColorPickerView() {
         let vc = ColorPickerViewController(viewModel: viewModel.startColorPickerViewModel)
         addChild(vc)
         vc.view.translatesAutoresizingMaskIntoConstraints = false
@@ -63,13 +64,21 @@ extension GradientColorPickerViewController {
         startColorPickerViewController = vc
     }
     
-    func setupEndColorPickerView() {
+    private func setupEndColorPickerView() {
         let vc = ColorPickerViewController(viewModel: viewModel.endColorPickerViewModel)
         addChild(vc)
         vc.view.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(vc.view)
         vc.didMove(toParent: self)
         endColorPickerViewController = vc
+    }
+    
+    private func applySameWidthConditionForTitles() {
+        guard let startColorPickerViewController = startColorPickerViewController,
+              let endColorPickerViewController = endColorPickerViewController else {
+            return
+        }
+        startColorPickerViewController.titleLabel.widthAnchor.constraint(equalTo: endColorPickerViewController.titleLabel.widthAnchor).isActive = true
     }
 }
 
