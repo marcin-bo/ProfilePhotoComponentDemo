@@ -16,9 +16,21 @@ final class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addColorPickerViewController()
+        addBackgroundTypePickerViewController()
+        // addColorPickerViewController()
     }
+}
 
+extension UIViewController {
+    func add(_ child: UIViewController) {
+        addChild(child)
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+    }
+}
+
+// MARK: ColorPickerViewController
+extension ViewController {
     private func addColorPickerViewController() {
         let didTapColorSelector: (UIColor) -> Void = { [weak self] currentColor in
             self?.openColorPicker(with: currentColor)
@@ -47,10 +59,29 @@ final class ViewController: UIViewController {
     }
 }
 
-extension UIViewController {
-    func add(_ child: UIViewController) {
-        addChild(child)
-        view.addSubview(child.view)
-        child.didMove(toParent: self)
+// MARK: BackgroundTypePickerViewController
+extension ViewController {
+    private func addBackgroundTypePickerViewController() {
+        let vc = makeBackgroundTypePickerViewController (
+            currentBackgroundType: .gradient,
+            didUpdateBackgroundType: nil
+        )
+        add(vc)
+    }
+    
+    private func makeBackgroundTypePickerViewController(
+        currentBackgroundType: BackgroundType = .gradient,
+        didUpdateBackgroundType: ((BackgroundType) -> Void)? = nil
+    ) -> BackgroundTypePickerViewController {
+        let viewModel: BackgroundTypePickerViewModelType = BackgroundTypePickerViewModel(
+            currentBackgroundType: currentBackgroundType,
+            backgroundTypeTitles: makeBackgroundTypeTitles(),
+            didUpdateBackgroundType: didUpdateBackgroundType ?? { _ in }
+        )
+        return BackgroundTypePickerViewController(viewModel: viewModel)
+    }
+    
+    private func makeBackgroundTypeTitles() -> BackgroundTypeTitles {
+        BackgroundTypeTitles(solidTitle: "Solid", gradientTitle: "Gradient", imageTitle: "Image")
     }
 }
