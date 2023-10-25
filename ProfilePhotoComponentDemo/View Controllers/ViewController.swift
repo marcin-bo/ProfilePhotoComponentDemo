@@ -16,7 +16,8 @@ final class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addBackgroundTypePickerViewController()
+        addGradientColorPickerViewController()
+        // addBackgroundTypePickerViewController()
         // addColorPickerViewController()
     }
 }
@@ -25,6 +26,10 @@ extension UIViewController {
     func add(_ child: UIViewController) {
         addChild(child)
         view.addSubview(child.view)
+        child.view.translatesAutoresizingMaskIntoConstraints = false
+        child.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
+        child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+        child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
         child.didMove(toParent: self)
     }
 }
@@ -83,5 +88,26 @@ extension ViewController {
     
     private func makeBackgroundTypeTitles() -> BackgroundTypeTitles {
         BackgroundTypeTitles(solidTitle: "Solid", gradientTitle: "Gradient", imageTitle: "Image")
+    }
+}
+
+// MARK: GradientColorPickerViewController
+extension ViewController {
+    private func addGradientColorPickerViewController() {
+        let didTapColorSelector1: (UIColor) -> Void = { currentColor in
+            print("Did tap start color selector \(currentColor)")
+        }
+        let startColorPickerViewModel: ColorPickerViewModelType = ColorPickerViewModel(title: "Start color", currentColor: .green, didTapColorSelector: didTapColorSelector1)
+        
+        let didTapColorSelector2: (UIColor) -> Void = { currentColor in
+            print("Did tap end color selector \(currentColor)")
+        }
+        let endColorPickerViewModel: ColorPickerViewModelType = ColorPickerViewModel(title: "End color", currentColor: .red, didTapColorSelector: didTapColorSelector2)
+        
+        let viewModel = GradientColorPickerViewModel(
+            startColorPickerViewModel: startColorPickerViewModel,
+            endColorPickerViewModel: endColorPickerViewModel)
+        let vc = GradientColorPickerViewController(viewModel: viewModel)
+        add(vc)
     }
 }
