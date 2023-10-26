@@ -1,4 +1,4 @@
-import UIComponents
+@testable import UIComponents
 import XCTest
 
 final class ProfileIconViewSnapshotTests: XCTestCase {
