@@ -72,10 +72,7 @@ extension BackgroundTypePickerViewController {
         let action2 = UIAction(title: backgroundTypeTitles.gradientTitle) { [weak self] _ in
             self?.viewModel.currentBackgroundType = .gradient
         }
-        let action3 = UIAction(title: backgroundTypeTitles.imageTitle) { [weak self] _ in
-            self?.viewModel.currentBackgroundType = .image
-        }
         
-        return UISegmentedControl(items: [action1, action2, action3])
+        return UISegmentedControl(items: [action1, action2])
     }
 }
