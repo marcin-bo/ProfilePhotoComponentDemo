@@ -32,7 +32,7 @@ final class ProfilePhotoPickerViewControllerTests: XCTestCase {
         
         _ = sut.view
         
-        XCTAssertEqual(sut.backgroundTypePickerViewController!.backgroundTypeSegmentedControl.numberOfSegments, 3)
+        XCTAssertEqual(sut.backgroundTypePickerViewController!.backgroundTypeSegmentedControl.numberOfSegments, 2)
     }
     
     func test_viewDidLoad_rendersGradientColorPickerViewController() {

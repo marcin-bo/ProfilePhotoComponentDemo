@@ -15,10 +15,10 @@ final class BackgroundTypePickerViewControllerTests: XCTestCase {
         
         _ = sut.view
         
-        XCTAssertEqual(sut.backgroundTypeSegmentedControl.numberOfSegments, 3)
+        XCTAssertEqual(sut.backgroundTypeSegmentedControl.numberOfSegments, 2)
         XCTAssertEqual(sut.backgroundTypeSegmentedControl.titleForSegment(at: 0), "Solid")
         XCTAssertEqual(sut.backgroundTypeSegmentedControl.titleForSegment(at: 1), "Gradient")
-        XCTAssertEqual(sut.backgroundTypeSegmentedControl.titleForSegment(at: 2), "Image")
+        // XCTAssertEqual(sut.backgroundTypeSegmentedControl.titleForSegment(at: 2), "Image")
     }
 
     func test_viewDidLoad_whenSolidIsCurrentBackground_setsSolidInSegmentedControl() {
@@ -37,13 +37,14 @@ final class BackgroundTypePickerViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.backgroundTypeSegmentedControl.selectedSegmentIndex, 1)
     }
     
-    func test_viewDidLoad_whenImageIsCurrentBackground_setsImageInSegmentedControl() {
-        let sut = makeSUT(currentBackgroundType: .image, backgroundTypeTitles: makeBackgroundTypeTitles())
-        
-        _ = sut.view
-        
-        XCTAssertEqual(sut.backgroundTypeSegmentedControl.selectedSegmentIndex, 2)
-    }
+    // TODO: unit test commented out since I decided to not to support images in profile icons yet
+//    func test_viewDidLoad_whenImageIsCurrentBackground_setsImageInSegmentedControl() {
+//        let sut = makeSUT(currentBackgroundType: .image, backgroundTypeTitles: makeBackgroundTypeTitles())
+//
+//        _ = sut.view
+//
+//        XCTAssertEqual(sut.backgroundTypeSegmentedControl.selectedSegmentIndex, 2)
+//    }
     
     // TODO: Test binding behaviour
 }
