@@ -74,15 +74,20 @@ extension ViewController {
     }
 }
 
-extension UIViewController {
-    func add(_ child: UIViewController) {
+extension ViewController {
+    private func add(_ child: UIViewController) {
         addChild(child)
         view.addSubview(child.view)
         child.view.translatesAutoresizingMaskIntoConstraints = false
-        child.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
-        child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-        child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
+        child.view.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.topSpace).isActive = true
+        child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.leadingTrailingSpace).isActive = true
+        child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.leadingTrailingSpace).isActive = true
         child.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         child.didMove(toParent: self)
+    }
+    
+    private enum Constants {
+        static let topSpace: CGFloat = 60
+        static let leadingTrailingSpace: CGFloat = 24
     }
 }
