@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class ProfileIconView: UIView {
+final class ProfileIconView: UIView {
     // MARK: Data
     var profileIcon: ProfileIcon {
         didSet {
@@ -37,7 +37,7 @@ public final class ProfileIconView: UIView {
     private var cornerRadiusRatio: CGFloat = 0
     
     // MARK: Methods
-    public required init(frame: CGRect, profileIcon: ProfileIcon) {
+    required init(frame: CGRect, profileIcon: ProfileIcon) {
         self.profileIcon = profileIcon
         super.init(frame: frame)
         setupSubviews()
@@ -49,12 +49,12 @@ public final class ProfileIconView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         initialsLabel.font = UIFont.systemFont(ofSize: contentView.frame.height / 2, weight: .bold)
     }
     
-    public override func layoutSublayers(of layer: CALayer) {
+    override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         updateSublayers()
     }
@@ -71,7 +71,7 @@ public final class ProfileIconView: UIView {
         }
     }
     
-    public func update(profileIcon: ProfileIcon) {
+    func update(profileIcon: ProfileIcon) {
         self.profileIcon = profileIcon
     }
 }

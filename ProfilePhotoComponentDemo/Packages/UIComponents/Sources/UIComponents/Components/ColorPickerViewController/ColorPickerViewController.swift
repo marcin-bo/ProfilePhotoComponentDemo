@@ -8,7 +8,7 @@
 import class Combine.AnyCancellable
 import UIKit
 
-public final class ColorPickerViewController: UIViewController {
+final class ColorPickerViewController: UIViewController {
     // MARK: View model
     private var viewModel: ColorPickerViewModelType
     
@@ -29,7 +29,7 @@ public final class ColorPickerViewController: UIViewController {
     private var cancellable: AnyCancellable?
     
     // MARK: Methods
-    public init(viewModel: ColorPickerViewModelType) {
+    init(viewModel: ColorPickerViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,7 +39,7 @@ public final class ColorPickerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
         setupTapGestureRecognizer()

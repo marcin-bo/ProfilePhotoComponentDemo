@@ -18,7 +18,7 @@ final class SelectedColorView: UIView {
         makeArrowImageView()
     }()
     
-    public required init(frame: CGRect, currentColor: UIColor) {
+    required init(frame: CGRect, currentColor: UIColor) {
         self.currentColor = currentColor
         super.init(frame: frame)
         setupSubviews()

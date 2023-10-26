@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class BackgroundTypePickerViewController: UIViewController {
+final class BackgroundTypePickerViewController: UIViewController {
     private var viewModel: BackgroundTypePickerViewModelType
     
     lazy var backgroundTypeSegmentedControl: UISegmentedControl = {
@@ -17,7 +17,7 @@ public final class BackgroundTypePickerViewController: UIViewController {
         )
     }()
     
-    public init(viewModel: BackgroundTypePickerViewModelType) {
+    init(viewModel: BackgroundTypePickerViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -27,7 +27,7 @@ public final class BackgroundTypePickerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
         setCurrentBackgroundType()

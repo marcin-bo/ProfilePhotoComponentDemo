@@ -5,7 +5,7 @@
 //  Created by Marcin Borek on 25/10/2023.
 //
 
-public protocol ProfilePhotoPickerViewModelType {
+protocol ProfilePhotoPickerViewModelType {
     var title: String { get }
     var currentProfileIcon: ProfileIcon { get set }
     var backgroundTypePickerViewModel: BackgroundTypePickerViewModelType { get set }
@@ -13,14 +13,14 @@ public protocol ProfilePhotoPickerViewModelType {
     var gradientColorPickerViewModel: GradientColorPickerViewModelType { get set }
 }
 
-public final class ProfilePhotoPickerViewModel: ProfilePhotoPickerViewModelType {
-    public let title: String
-    public var currentProfileIcon: ProfileIcon
-    public var backgroundTypePickerViewModel: BackgroundTypePickerViewModelType
-    public var solidColorPickerViewModel: ColorPickerViewModelType
-    public var gradientColorPickerViewModel: GradientColorPickerViewModelType
+final class ProfilePhotoPickerViewModel: ProfilePhotoPickerViewModelType {
+    let title: String
+    var currentProfileIcon: ProfileIcon
+    var backgroundTypePickerViewModel: BackgroundTypePickerViewModelType
+    var solidColorPickerViewModel: ColorPickerViewModelType
+    var gradientColorPickerViewModel: GradientColorPickerViewModelType
     
-    public init(
+    init(
         title: String,
         currentProfileIcon: ProfileIcon,
         backgroundTypePickerViewModel: BackgroundTypePickerViewModelType,

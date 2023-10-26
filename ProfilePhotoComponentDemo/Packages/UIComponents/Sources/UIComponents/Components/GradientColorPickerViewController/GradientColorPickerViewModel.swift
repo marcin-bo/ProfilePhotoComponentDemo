@@ -5,16 +5,16 @@
 //  Created by Marcin Borek on 25/10/2023.
 //
 
-public protocol GradientColorPickerViewModelType {
+protocol GradientColorPickerViewModelType {
     var startColorPickerViewModel: ColorPickerViewModelType { get set }
     var endColorPickerViewModel: ColorPickerViewModelType { get set }
 }
 
-public final class GradientColorPickerViewModel: GradientColorPickerViewModelType {
-    public var startColorPickerViewModel: ColorPickerViewModelType
-    public var endColorPickerViewModel: ColorPickerViewModelType
+final class GradientColorPickerViewModel: GradientColorPickerViewModelType {
+    var startColorPickerViewModel: ColorPickerViewModelType
+    var endColorPickerViewModel: ColorPickerViewModelType
     
-    public init(
+    init(
         startColorPickerViewModel: ColorPickerViewModelType,
         endColorPickerViewModel: ColorPickerViewModelType
     ) {

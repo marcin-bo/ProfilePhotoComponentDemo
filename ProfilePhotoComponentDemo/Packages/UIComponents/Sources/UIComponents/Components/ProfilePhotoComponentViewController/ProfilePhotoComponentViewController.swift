@@ -30,35 +30,11 @@ public final class ProfilePhotoComponentViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        let currentProfileIcon: ProfileIcon = .gradient(
-            ProfileIcon.GradientAttributes(
-                initials: "MB",
-                startColor: .blue,
-                endColor: .red,
-                shape: .roundedSquare
-            )
-        )
-        
-        let backgroundTypeTitles = makeBackgroundTypeTitles()
-        let colorPickersTitles = makeColorPickersTitles()
-        
         addProfilePhotoPickerViewController(
-            title: "Change Icon",
-            currentProfileIcon: currentProfileIcon,
-            backgroundTypeTitles: backgroundTypeTitles,
-            colorPickersTitles: colorPickersTitles
-        )
-    }
-    
-    private func makeBackgroundTypeTitles() -> BackgroundTypeTitles {
-        BackgroundTypeTitles(solidTitle: "Solid", gradientTitle: "Gradient", imageTitle: "Image")
-    }
-    
-    private func makeColorPickersTitles() -> ColorPickersTitles {
-        ColorPickersTitles(
-            solidColorTitle: "Background color",
-            startColorTitle: "Start color",
-            endColorTitle: "End color"
+            title: viewModel.title,
+            currentProfileIcon: viewModel.currentProfileIcon,
+            backgroundTypeTitles: viewModel.backgroundTypeTitles,
+            colorPickersTitles: viewModel.colorPickersTitles
         )
     }
 }

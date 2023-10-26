@@ -10,7 +10,7 @@ import class Combine.AnyCancellable
 import struct Combine.Published
 import class UIKit.UIColor
 
-public protocol ColorPickerViewModelType {
+protocol ColorPickerViewModelType {
     // Output
     var title: String { get }
     var currentColor: UIColor { get set }
@@ -21,24 +21,24 @@ public protocol ColorPickerViewModelType {
     func update(currentColor: UIColor)
 }
 
-public final class ColorPickerViewModel: ColorPickerViewModelType {
+final class ColorPickerViewModel: ColorPickerViewModelType {
     // Output
-    public let title: String
-    @Published public var currentColor: UIColor
-    public var currentColorPublisher: Published<UIColor>.Publisher { $currentColor }
+    let title: String
+    @Published var currentColor: UIColor
+    var currentColorPublisher: Published<UIColor>.Publisher { $currentColor }
     
     // Input
-    public var didTapColorSelector: (UIColor) -> Void
+    var didTapColorSelector: (UIColor) -> Void
     
     private var cancellable: AnyCancellable?
     
-    public init(title: String, currentColor: UIColor, didTapColorSelector: @escaping (UIColor) -> Void) {
+    init(title: String, currentColor: UIColor, didTapColorSelector: @escaping (UIColor) -> Void) {
         self.title = title
         self.currentColor = currentColor
         self.didTapColorSelector = didTapColorSelector
     }
     
-    public func update(currentColor: UIColor) {
+    func update(currentColor: UIColor) {
         self.currentColor = currentColor
     }
 }

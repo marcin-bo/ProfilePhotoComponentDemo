@@ -7,7 +7,7 @@
 
 import Combine
 
-public protocol BackgroundTypePickerViewModelType {
+protocol BackgroundTypePickerViewModelType {
     // Input
     var currentBackgroundType: BackgroundType { get set }
     var backgroundTypeTitles: BackgroundTypeTitles { get }
@@ -16,15 +16,15 @@ public protocol BackgroundTypePickerViewModelType {
     var currentBackgroundTypePublisher: Published<BackgroundType>.Publisher { get }
 }
 
-public final class BackgroundTypePickerViewModel: BackgroundTypePickerViewModelType {
+final class BackgroundTypePickerViewModel: BackgroundTypePickerViewModelType {
     // Output
-    @Published public var currentBackgroundType: BackgroundType
-    public let backgroundTypeTitles: BackgroundTypeTitles
+    @Published var currentBackgroundType: BackgroundType
+    let backgroundTypeTitles: BackgroundTypeTitles
     
     // Input
-    public var currentBackgroundTypePublisher: Published<BackgroundType>.Publisher { $currentBackgroundType }
+    var currentBackgroundTypePublisher: Published<BackgroundType>.Publisher { $currentBackgroundType }
     
-    public init(
+    init(
         currentBackgroundType: BackgroundType,
         backgroundTypeTitles: BackgroundTypeTitles) {
         self.currentBackgroundType = currentBackgroundType

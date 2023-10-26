@@ -8,7 +8,7 @@
 import class Combine.AnyCancellable
 import UIKit
 
-public final class ProfilePhotoPickerViewController: UIViewController {
+final class ProfilePhotoPickerViewController: UIViewController {
     // MARK: View model
     private var viewModel: ProfilePhotoPickerViewModelType
     
@@ -42,7 +42,7 @@ public final class ProfilePhotoPickerViewController: UIViewController {
     }()
     
     // MARK: Methods
-    public init(viewModel: ProfilePhotoPickerViewModelType) {
+    init(viewModel: ProfilePhotoPickerViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -52,7 +52,7 @@ public final class ProfilePhotoPickerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
         setupAppearance()

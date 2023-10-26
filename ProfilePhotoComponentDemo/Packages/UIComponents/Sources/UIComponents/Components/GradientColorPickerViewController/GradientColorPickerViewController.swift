@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class GradientColorPickerViewController: UIViewController {
+final class GradientColorPickerViewController: UIViewController {
     // MARK: View model
     private var viewModel: GradientColorPickerViewModelType
     
@@ -21,7 +21,7 @@ public final class GradientColorPickerViewController: UIViewController {
     }()
     
     // MARK: Methods
-    public init(viewModel: GradientColorPickerViewModelType) {
+    init(viewModel: GradientColorPickerViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -31,7 +31,7 @@ public final class GradientColorPickerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
     }
