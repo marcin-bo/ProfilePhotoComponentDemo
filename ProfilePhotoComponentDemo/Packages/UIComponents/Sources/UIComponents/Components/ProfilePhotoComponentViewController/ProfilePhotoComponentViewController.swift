@@ -81,7 +81,7 @@ extension ProfilePhotoComponentViewController {
                 if case .solid(let attributes) = viewModel.currentProfileIcon {
                     return attributes.backgroundColor
                 } else {
-                    return DefaultPickerColors.solidColor
+                    return viewModel.defaultPickerColors.solidColor
                 }
             }
             return makeColorPickerViewModel(
@@ -97,7 +97,7 @@ extension ProfilePhotoComponentViewController {
                 if case .gradient(let attributes) = viewModel.currentProfileIcon {
                     return attributes.startColor
                 } else {
-                    return DefaultPickerColors.startColor
+                    return viewModel.defaultPickerColors.startColor
                 }
             }
             return makeColorPickerViewModel(
@@ -112,7 +112,7 @@ extension ProfilePhotoComponentViewController {
                 if case .gradient(let attributes) = viewModel.currentProfileIcon {
                     return attributes.endColor
                 } else {
-                    return DefaultPickerColors.endColor
+                    return viewModel.defaultPickerColors.endColor
                 }
             }
             return makeColorPickerViewModel(
@@ -139,11 +139,6 @@ extension ProfilePhotoComponentViewController {
         )
     }
     
-    private enum DefaultPickerColors {
-        static let solidColor: UIColor = .blue
-        static let startColor: UIColor = .blue
-        static let endColor: UIColor = .purple
-    }
 }
 
 // MARK: ColorPickerViewController

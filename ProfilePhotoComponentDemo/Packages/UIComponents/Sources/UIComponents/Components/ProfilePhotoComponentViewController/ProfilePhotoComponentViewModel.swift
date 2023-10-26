@@ -12,6 +12,7 @@ public protocol ProfilePhotoComponentViewModelType {
     var currentProfileIcon: ProfileIcon { get }
     var backgroundTypeTitles: BackgroundTypeTitles { get }
     var colorPickersTitles: ColorPickersTitles { get }
+    var defaultPickerColors: DefaultPickerColors { get }
 }
 
 public final class ProfilePhotoComponentViewModel: ProfilePhotoComponentViewModelType {
@@ -22,6 +23,7 @@ public final class ProfilePhotoComponentViewModel: ProfilePhotoComponentViewMode
     public let currentProfileIcon: ProfileIcon
     public let backgroundTypeTitles: BackgroundTypeTitles
     public let colorPickersTitles: ColorPickersTitles
+    public let defaultPickerColors: DefaultPickerColors
     
     public init(
         title: String,
@@ -29,7 +31,8 @@ public final class ProfilePhotoComponentViewModel: ProfilePhotoComponentViewMode
         initials: String,
         currentProfileIcon: ProfileIcon,
         backgroundTypeTitles: BackgroundTypeTitles,
-        colorPickersTitles: ColorPickersTitles
+        colorPickersTitles: ColorPickersTitles,
+        defaultPickerColors: DefaultPickerColors
     ) {
         self.title = title
         self.defaultProfileIconShape = defaultProfileIconShape
@@ -37,5 +40,6 @@ public final class ProfilePhotoComponentViewModel: ProfilePhotoComponentViewMode
         self.currentProfileIcon = currentProfileIcon
         self.backgroundTypeTitles = backgroundTypeTitles
         self.colorPickersTitles = colorPickersTitles
+        self.defaultPickerColors = defaultPickerColors
     }
 }

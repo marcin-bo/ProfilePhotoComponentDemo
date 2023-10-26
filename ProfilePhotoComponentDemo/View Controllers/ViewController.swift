@@ -22,7 +22,8 @@ final class ViewController: UIViewController {
             initials: makeInitials(),
             currentProfileIcon: makeCurrentProfileIcon(),
             backgroundTypeTitles: makeBackgroundTypeTitles(),
-            colorPickersTitles: makeColorPickersTitles()
+            colorPickersTitles: makeColorPickersTitles(),
+            defaultPickerColors: makeDefaultPickerColors()
         )
         
         let vc = ProfilePhotoComponentViewController(viewModel: viewModel)
@@ -46,6 +47,10 @@ extension ViewController {
                 shape: .roundedSquare
             )
         )
+    }
+
+    private func makeDefaultPickerColors() -> DefaultPickerColors{
+        DefaultPickerColors(solidColor: .blue, startColor: .blue, endColor: .purple)
     }
     
     private func makeDefaultProfileIconShape() -> ProfileIcon.Shape {
@@ -81,9 +86,3 @@ extension UIViewController {
         child.didMove(toParent: self)
     }
 }
-
-//    private enum DefaultPickerColors {
-//        static let solidColor: UIColor = .blue
-//        static let startColor: UIColor = .blue
-//        static let endColor: UIColor = .purple
-//    }
