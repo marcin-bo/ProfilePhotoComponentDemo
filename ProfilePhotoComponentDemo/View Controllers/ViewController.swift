@@ -18,6 +18,8 @@ final class ViewController: UIViewController {
     private func addProfilePhotoComponentViewController() {
         let viewModel = ProfilePhotoComponentViewModel(
             title: makeWindowTitle(),
+            defaultProfileIconShape: makeDefaultProfileIconShape(),
+            initials: makeInitials(),
             currentProfileIcon: makeCurrentProfileIcon(),
             backgroundTypeTitles: makeBackgroundTypeTitles(),
             colorPickersTitles: makeColorPickersTitles()
@@ -38,12 +40,20 @@ extension ViewController {
         // Here we could fetch the current icon from a repository
         ProfileIcon.gradient(
             ProfileIcon.GradientAttributes(
-                initials: "MB",
+                initials: makeInitials(),
                 startColor: .blue,
                 endColor: .red,
                 shape: .roundedSquare
             )
         )
+    }
+    
+    private func makeDefaultProfileIconShape() -> ProfileIcon.Shape {
+        .roundedSquare
+    }
+    
+    private func makeInitials() -> String {
+        "MB"
     }
     
     private func makeBackgroundTypeTitles() -> BackgroundTypeTitles {

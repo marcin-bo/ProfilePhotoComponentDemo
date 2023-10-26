@@ -30,12 +30,7 @@ public final class ProfilePhotoComponentViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        addProfilePhotoPickerViewController(
-            title: viewModel.title,
-            currentProfileIcon: viewModel.currentProfileIcon,
-            backgroundTypeTitles: viewModel.backgroundTypeTitles,
-            colorPickersTitles: viewModel.colorPickersTitles
-        )
+        addProfilePhotoPickerViewController(viewModel: viewModel)
     }
 }
 
@@ -55,57 +50,42 @@ extension UIViewController {
 // MARK: ProfilePhotoPickerViewController
 extension ProfilePhotoComponentViewController {
     private func addProfilePhotoPickerViewController(
-        title: String,
-        currentProfileIcon: ProfileIcon,
-        backgroundTypeTitles: BackgroundTypeTitles,
-        colorPickersTitles: ColorPickersTitles
+        viewModel: ProfilePhotoComponentViewModelType
     ) {
         let vc = makeProfilePhotoPickerViewController(
-            title: title,
-            currentProfileIcon: currentProfileIcon,
-            backgroundTypeTitles: backgroundTypeTitles,
-            colorPickersTitles: colorPickersTitles
+            viewModel: viewModel
         )
         add(vc)
     }
     
     private func makeProfilePhotoPickerViewController(
-        title: String,
-        currentProfileIcon: ProfileIcon,
-        backgroundTypeTitles: BackgroundTypeTitles,
-        colorPickersTitles: ColorPickersTitles
+        viewModel: ProfilePhotoComponentViewModelType
     ) -> ProfilePhotoPickerViewController {
         let viewModel = makeProfilePhotoPickerViewModel(
-            title: title,
-            currentProfileIcon: currentProfileIcon,
-            backgroundTypeTitles: backgroundTypeTitles,
-            colorPickersTitles: colorPickersTitles
+            viewModel: viewModel
         )
         return ProfilePhotoPickerViewController(viewModel: viewModel)
     }
     
     private func makeProfilePhotoPickerViewModel(
-        title: String,
-        currentProfileIcon: ProfileIcon,
-        backgroundTypeTitles: BackgroundTypeTitles,
-        colorPickersTitles: ColorPickersTitles
+        viewModel: ProfilePhotoComponentViewModelType
     ) -> ProfilePhotoPickerViewModelType {
-        let currentBackgroundType: BackgroundType = currentProfileIcon.backgroundType
+        let currentBackgroundType: BackgroundType = viewModel.currentProfileIcon.backgroundType
         
         let backgroundTypePickerViewModel = makeBackgroundTypePickerViewModel(
             currentBackgroundType: currentBackgroundType,
-            backgroundTypeTitles: backgroundTypeTitles
+            backgroundTypeTitles: viewModel.backgroundTypeTitles
         )
         let solidColorPickerViewModel: ColorPickerViewModelType = {
             var currentColor: UIColor {
-                if case .solid(let attributes) = currentProfileIcon {
+                if case .solid(let attributes) = viewModel.currentProfileIcon {
                     return attributes.backgroundColor
                 } else {
                     return DefaultPickerColors.solidColor
                 }
             }
             return makeColorPickerViewModel(
-                title: colorPickersTitles.solidColorTitle,
+                title: viewModel.colorPickersTitles.solidColorTitle,
                 currentColor: currentColor,
                 pickerType: .solidColor
             )
@@ -114,14 +94,14 @@ extension ProfilePhotoComponentViewController {
        
         let startColorPickerViewModel: ColorPickerViewModelType = {
             var currentColor: UIColor {
-                if case .gradient(let attributes) = currentProfileIcon {
+                if case .gradient(let attributes) = viewModel.currentProfileIcon {
                     return attributes.startColor
                 } else {
                     return DefaultPickerColors.startColor
                 }
             }
             return makeColorPickerViewModel(
-                title: colorPickersTitles.startColorTitle,
+                title: viewModel.colorPickersTitles.startColorTitle,
                 currentColor: currentColor,
                 pickerType: .startColor)
         }()
@@ -129,14 +109,14 @@ extension ProfilePhotoComponentViewController {
         
         let endColorPickerViewModel = {
             var currentColor: UIColor {
-                if case .gradient(let attributes) = currentProfileIcon {
+                if case .gradient(let attributes) = viewModel.currentProfileIcon {
                     return attributes.endColor
                 } else {
                     return DefaultPickerColors.endColor
                 }
             }
             return makeColorPickerViewModel(
-                title: colorPickersTitles.endColorTitle,
+                title: viewModel.colorPickersTitles.endColorTitle,
                 currentColor: currentColor,
                 pickerType: .endColor
             )
@@ -149,8 +129,10 @@ extension ProfilePhotoComponentViewController {
         )
         
         return ProfilePhotoPickerViewModel(
-            title: title,
-            currentProfileIcon: currentProfileIcon,
+            title: viewModel.title,
+            defaultProfileIconShape: viewModel.defaultProfileIconShape,
+            initials: viewModel.initials,
+            currentProfileIcon: viewModel.currentProfileIcon,
             backgroundTypePickerViewModel: backgroundTypePickerViewModel,
             solidColorPickerViewModel: solidColorPickerViewModel,
             gradientColorPickerViewModel: gradientColorPickerViewModel

@@ -112,10 +112,11 @@ final class ProfilePhotoPickerViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .dropFirst()
             .sink { [weak self] color in
+                guard let strongSelf = self else { return }
                 let attributes = ProfileIcon.SolidAttributes(
-                    initials: "MB", // TODO: get it from VM
+                    initials: strongSelf.viewModel.initials,
                     backgroundColor: color,
-                    shape: .roundedSquare // TODO: get it from VM
+                    shape: strongSelf.viewModel.defaultProfileIconShape
                 )
                 self?.profileIconView.profileIcon = .solid(attributes)
             }
@@ -130,11 +131,12 @@ final class ProfilePhotoPickerViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .dropFirst()
             .sink { [weak self] color in
+                guard let strongSelf = self else { return }
                 let attributes = ProfileIcon.GradientAttributes(
-                    initials: "MB", // TODO: get it from VM
+                    initials: strongSelf.viewModel.initials,
                     startColor: color,
-                    endColor: .green, // TODO: get it from VM
-                    shape: .roundedSquare // TODO: get it from VM
+                    endColor: strongSelf.viewModel.gradientColorPickerViewModel.endColorPickerViewModel.currentColor,
+                    shape: strongSelf.viewModel.defaultProfileIconShape
                 )
                 self?.profileIconView.profileIcon = .gradient(attributes)
             }
@@ -147,11 +149,12 @@ final class ProfilePhotoPickerViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .dropFirst()
             .sink { [weak self] color in
+                guard let strongSelf = self else { return }
                 let attributes = ProfileIcon.GradientAttributes(
-                    initials: "MB", // TODO: get it from VM
-                    startColor: .red, // TODO: get it from VM
+                    initials: strongSelf.viewModel.initials,
+                    startColor: strongSelf.viewModel.gradientColorPickerViewModel.startColorPickerViewModel.currentColor,
                     endColor: color,
-                    shape: .roundedSquare // TODO: get it from VM
+                    shape: strongSelf.viewModel.defaultProfileIconShape
                 )
                 self?.profileIconView.profileIcon = .gradient(attributes)
             }
