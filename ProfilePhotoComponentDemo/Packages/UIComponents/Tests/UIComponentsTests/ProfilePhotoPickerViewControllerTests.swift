@@ -84,6 +84,8 @@ extension ProfilePhotoPickerViewControllerTests {
         
         return ProfilePhotoPickerViewModel(
             title: "Change Icon",
+            defaultProfileIconShape: .roundedSquare,
+            initials: "MB",
             currentProfileIcon: currentProfileIcon,
             backgroundTypePickerViewModel: backgroundTypePickerViewModel,
             solidColorPickerViewModel: solidColorPickerViewModel,
