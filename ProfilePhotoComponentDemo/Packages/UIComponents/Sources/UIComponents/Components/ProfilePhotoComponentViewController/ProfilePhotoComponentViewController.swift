@@ -173,8 +173,15 @@ enum PickerType {
 
 // MARK Opening UIColorPickerViewController
 extension ProfilePhotoComponentViewController {
+    
+    /// This singleton makes sure that there can only be one UIColorPickerViewController at all times
+    /// It's fixes issues on Mac Catalyst with UIColorPickerViewController
+    private final class ColorPickerSingleton {
+        static let shared = UIColorPickerViewController()
+    }
+    
     private func openColorPicker(with currentColor: UIColor, for pickerType: PickerType) {
-        let picker = UIColorPickerViewController()
+        let picker = ColorPickerSingleton.shared
         picker.selectedColor = currentColor
         
         // Subscribing selectedColor property changes
