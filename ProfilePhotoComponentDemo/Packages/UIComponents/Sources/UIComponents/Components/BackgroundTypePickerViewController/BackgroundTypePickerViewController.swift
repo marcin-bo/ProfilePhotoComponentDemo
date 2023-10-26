@@ -8,7 +8,7 @@
 import UIKit
 
 public final class BackgroundTypePickerViewController: UIViewController {
-    private let viewModel: BackgroundTypePickerViewModelType
+    private var viewModel: BackgroundTypePickerViewModelType
     
     lazy var backgroundTypeSegmentedControl: UISegmentedControl = {
         makeBackgroundTypeSegmentedControl(
@@ -16,7 +16,7 @@ public final class BackgroundTypePickerViewController: UIViewController {
             backgroundTypeTitles: viewModel.backgroundTypeTitles
         )
     }()
-
+    
     public init(viewModel: BackgroundTypePickerViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -67,16 +67,13 @@ extension BackgroundTypePickerViewController {
     ) -> UISegmentedControl {
         
         let action1 = UIAction(title: backgroundTypeTitles.solidTitle) { [weak self] _ in
-            print("Solid selected")
-            self?.viewModel.didUpdateBackgroundType(.solid)
+            self?.viewModel.currentBackgroundType = .solid
         }
         let action2 = UIAction(title: backgroundTypeTitles.gradientTitle) { [weak self] _ in
-            print("Gradient selected")
-            self?.viewModel.didUpdateBackgroundType(.gradient)
+            self?.viewModel.currentBackgroundType = .gradient
         }
         let action3 = UIAction(title: backgroundTypeTitles.imageTitle) { [weak self] _ in
-            print("Image selected")
-            self?.viewModel.didUpdateBackgroundType(.image)
+            self?.viewModel.currentBackgroundType = .image
         }
         
         return UISegmentedControl(items: [action1, action2, action3])

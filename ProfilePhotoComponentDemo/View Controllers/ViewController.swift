@@ -12,13 +12,49 @@ import UIKit
 final class ViewController: UIViewController {
     private var cancellable: AnyCancellable?
     
-    var colorPickerViewModel: ColorPickerViewModelType?
+    var endColorPickerViewModel: ColorPickerViewModelType?
+    var solidColorPickerViewModel: ColorPickerViewModelType?
+    var startColorPickerViewModel: ColorPickerViewModelType?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addGradientColorPickerViewController()
-        // addBackgroundTypePickerViewController()
-        // addColorPickerViewController()
+        
+        let currentProfileIcon: ProfileIcon = .gradient(
+            ProfileIcon.GradientAttributes(
+                initials: "MB",
+                startColor: .blue,
+                endColor: .red,
+                shape: .roundedSquare
+            )
+        )
+        
+        let backgroundTypeTitles = makeBackgroundTypeTitles()
+        let colorPickersTitles = makeColorPickersTitles()
+        
+        addProfilePhotoPickerViewController(
+            title: "Change Icon",
+            currentProfileIcon: currentProfileIcon,
+            backgroundTypeTitles: backgroundTypeTitles,
+            colorPickersTitles: colorPickersTitles
+        )
+    }
+    
+    private func makeBackgroundTypeTitles() -> BackgroundTypeTitles {
+        BackgroundTypeTitles(solidTitle: "Solid", gradientTitle: "Gradient", imageTitle: "Image")
+    }
+    
+    private func makeColorPickersTitles() -> ColorPickersTitles {
+        ColorPickersTitles(
+            solidColorTitle: "Background color",
+            startColorTitle: "Start color",
+            endColorTitle: "End color"
+        )
+    }
+    
+    struct ColorPickersTitles {
+        let solidColorTitle: String
+        let startColorTitle: String
+        let endColorTitle: String
     }
 }
 
@@ -30,34 +66,168 @@ extension UIViewController {
         child.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
         child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
         child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
+        child.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         child.didMove(toParent: self)
+    }
+}
+
+// MARK: ProfilePhotoPickerViewController
+extension ViewController {
+    private func addProfilePhotoPickerViewController(
+        title: String,
+        currentProfileIcon: ProfileIcon,
+        backgroundTypeTitles: BackgroundTypeTitles,
+        colorPickersTitles: ColorPickersTitles
+    ) {
+        let vc = makeProfilePhotoPickerViewController(
+            title: title,
+            currentProfileIcon: currentProfileIcon,
+            backgroundTypeTitles: backgroundTypeTitles,
+            colorPickersTitles: colorPickersTitles
+        )
+        add(vc)
+    }
+    
+    private func makeProfilePhotoPickerViewController(
+        title: String,
+        currentProfileIcon: ProfileIcon,
+        backgroundTypeTitles: BackgroundTypeTitles,
+        colorPickersTitles: ColorPickersTitles
+    ) -> ProfilePhotoPickerViewController {
+        let viewModel = makeProfilePhotoPickerViewModel(
+            title: title,
+            currentProfileIcon: currentProfileIcon,
+            backgroundTypeTitles: backgroundTypeTitles,
+            colorPickersTitles: colorPickersTitles
+        )
+        return ProfilePhotoPickerViewController(viewModel: viewModel)
+    }
+    
+    private func makeProfilePhotoPickerViewModel(
+        title: String,
+        currentProfileIcon: ProfileIcon,
+        backgroundTypeTitles: BackgroundTypeTitles,
+        colorPickersTitles: ColorPickersTitles
+    ) -> ProfilePhotoPickerViewModelType {
+        let currentBackgroundType: BackgroundType = currentProfileIcon.backgroundType
+        
+        let backgroundTypePickerViewModel = makeBackgroundTypePickerViewModel(
+            currentBackgroundType: currentBackgroundType,
+            backgroundTypeTitles: backgroundTypeTitles
+        )
+        let solidColorPickerViewModel: ColorPickerViewModelType = {
+            var currentColor: UIColor {
+                if case .solid(let attributes) = currentProfileIcon {
+                    return attributes.backgroundColor
+                } else {
+                    return DefaultPickerColors.solidColor
+                }
+            }
+            return makeColorPickerViewModel(
+                title: colorPickersTitles.solidColorTitle,
+                currentColor: currentColor,
+                pickerType: .solidColor
+            )
+        }()
+        self.solidColorPickerViewModel = solidColorPickerViewModel
+       
+        let startColorPickerViewModel: ColorPickerViewModelType = {
+            var currentColor: UIColor {
+                if case .gradient(let attributes) = currentProfileIcon {
+                    return attributes.startColor
+                } else {
+                    return DefaultPickerColors.startColor
+                }
+            }
+            return makeColorPickerViewModel(
+                title: colorPickersTitles.startColorTitle,
+                currentColor: currentColor,
+                pickerType: .startColor)
+        }()
+        self.startColorPickerViewModel = startColorPickerViewModel
+        
+        let endColorPickerViewModel = {
+            var currentColor: UIColor {
+                if case .gradient(let attributes) = currentProfileIcon {
+                    return attributes.endColor
+                } else {
+                    return DefaultPickerColors.endColor
+                }
+            }
+            return makeColorPickerViewModel(
+                title: colorPickersTitles.endColorTitle,
+                currentColor: currentColor,
+                pickerType: .endColor
+            )
+        }()
+        self.endColorPickerViewModel = endColorPickerViewModel
+        
+        let gradientColorPickerViewModel = GradientColorPickerViewModel(
+            startColorPickerViewModel: startColorPickerViewModel,
+            endColorPickerViewModel: endColorPickerViewModel
+        )
+        
+        return ProfilePhotoPickerViewModel(
+            title: title,
+            currentProfileIcon: currentProfileIcon,
+            backgroundTypePickerViewModel: backgroundTypePickerViewModel,
+            solidColorPickerViewModel: solidColorPickerViewModel,
+            gradientColorPickerViewModel: gradientColorPickerViewModel
+        )
+    }
+    
+    private enum DefaultPickerColors {
+        static let solidColor: UIColor = .blue
+        static let startColor: UIColor = .blue
+        static let endColor: UIColor = .purple
     }
 }
 
 // MARK: ColorPickerViewController
 extension ViewController {
-    private func addColorPickerViewController() {
+    private func makeColorPickerViewModel(
+        title: String,
+        currentColor: UIColor,
+        pickerType: PickerType
+    ) -> ColorPickerViewModelType {
         let didTapColorSelector: (UIColor) -> Void = { [weak self] currentColor in
-            self?.openColorPicker(with: currentColor)
+            self?.openColorPicker(with: currentColor, for: pickerType)
         }
-        let viewModel: ColorPickerViewModelType = ColorPickerViewModel(title: "Background color", currentColor: .green, didTapColorSelector: didTapColorSelector)
-        let vc = ColorPickerViewController(viewModel: viewModel)
-        add(vc)
-        
-        self.colorPickerViewModel = viewModel
+        let viewModel: ColorPickerViewModelType = ColorPickerViewModel(
+            title: title,
+            currentColor: currentColor,
+            didTapColorSelector: didTapColorSelector
+        )
+        return viewModel
     }
+}
 
-    func openColorPicker(with currentColor: UIColor) {
+enum PickerType {
+    case endColor
+    case solidColor
+    case startColor
+}
+
+// MARK Opening UIColorPickerViewController
+extension ViewController {
+    private func openColorPicker(with currentColor: UIColor, for pickerType: PickerType) {
         let picker = UIColorPickerViewController()
         picker.selectedColor = currentColor
         
-        //  Subscribing selectedColor property changes.
+        // Subscribing selectedColor property changes
         self.cancellable = picker.publisher(for: \.selectedColor)
             .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .removeDuplicates()
             .dropFirst()
             .sink { [weak self] color in
-                self?.colorPickerViewModel?.update(currentColor: color)
+                switch pickerType {
+                case .endColor:
+                    self?.endColorPickerViewModel?.update(currentColor: color)
+                case .solidColor:
+                    self?.solidColorPickerViewModel?.update(currentColor: color)
+                case .startColor:
+                    self?.startColorPickerViewModel?.update(currentColor: color)
+                }
             }
         
         self.present(picker, animated: true, completion: nil)
@@ -66,48 +236,40 @@ extension ViewController {
 
 // MARK: BackgroundTypePickerViewController
 extension ViewController {
-    private func addBackgroundTypePickerViewController() {
-        let vc = makeBackgroundTypePickerViewController (
-            currentBackgroundType: .gradient,
-            didUpdateBackgroundType: nil
-        )
-        add(vc)
-    }
-    
-    private func makeBackgroundTypePickerViewController(
-        currentBackgroundType: BackgroundType = .gradient,
-        didUpdateBackgroundType: ((BackgroundType) -> Void)? = nil
-    ) -> BackgroundTypePickerViewController {
-        let viewModel: BackgroundTypePickerViewModelType = BackgroundTypePickerViewModel(
+    private func makeBackgroundTypePickerViewModel(
+        currentBackgroundType: BackgroundType,
+        backgroundTypeTitles: BackgroundTypeTitles
+    ) -> BackgroundTypePickerViewModelType {
+        BackgroundTypePickerViewModel(
             currentBackgroundType: currentBackgroundType,
-            backgroundTypeTitles: makeBackgroundTypeTitles(),
-            didUpdateBackgroundType: didUpdateBackgroundType ?? { _ in }
+            backgroundTypeTitles: backgroundTypeTitles
         )
-        return BackgroundTypePickerViewController(viewModel: viewModel)
-    }
-    
-    private func makeBackgroundTypeTitles() -> BackgroundTypeTitles {
-        BackgroundTypeTitles(solidTitle: "Solid", gradientTitle: "Gradient", imageTitle: "Image")
     }
 }
 
 // MARK: GradientColorPickerViewController
 extension ViewController {
-    private func addGradientColorPickerViewController() {
-        let didTapColorSelector1: (UIColor) -> Void = { currentColor in
-            print("Did tap start color selector \(currentColor)")
+    private func makeStartColorPickerViewModel(title: String, currentColor: UIColor) -> ColorPickerViewModelType {
+        let didTapColorSelector: (UIColor) -> Void = { [weak self] currentColor in
+            self?.openColorPicker(with: currentColor, for: .startColor)
         }
-        let startColorPickerViewModel: ColorPickerViewModelType = ColorPickerViewModel(title: "Start color", currentColor: .green, didTapColorSelector: didTapColorSelector1)
-        
-        let didTapColorSelector2: (UIColor) -> Void = { currentColor in
-            print("Did tap end color selector \(currentColor)")
+        let viewModel: ColorPickerViewModelType = ColorPickerViewModel(
+            title: title,
+            currentColor: currentColor,
+            didTapColorSelector: didTapColorSelector
+        )
+        return viewModel
+    }
+    
+    private func makeEndColorPickerViewModel(title: String, currentColor: UIColor) -> ColorPickerViewModelType {
+        let didTapColorSelector: (UIColor) -> Void = { [weak self] currentColor in
+            self?.openColorPicker(with: currentColor, for: .endColor)
         }
-        let endColorPickerViewModel: ColorPickerViewModelType = ColorPickerViewModel(title: "End color", currentColor: .red, didTapColorSelector: didTapColorSelector2)
-        
-        let viewModel = GradientColorPickerViewModel(
-            startColorPickerViewModel: startColorPickerViewModel,
-            endColorPickerViewModel: endColorPickerViewModel)
-        let vc = GradientColorPickerViewController(viewModel: viewModel)
-        add(vc)
+        let viewModel: ColorPickerViewModelType = ColorPickerViewModel(
+            title: title,
+            currentColor: currentColor,
+            didTapColorSelector: didTapColorSelector
+        )
+        return viewModel
     }
 }

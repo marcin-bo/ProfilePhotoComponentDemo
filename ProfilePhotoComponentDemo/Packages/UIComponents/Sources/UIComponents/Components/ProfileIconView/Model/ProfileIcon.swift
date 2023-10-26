@@ -60,3 +60,16 @@ extension ProfileIcon {
         }
     }
 }
+
+extension ProfileIcon {
+    public var backgroundType: BackgroundType {
+        switch self {
+        case .solid(_):
+            return .solid
+        case .gradient(_):
+            return .gradient
+        case .image(_):
+            return .image
+        }
+    }
+}

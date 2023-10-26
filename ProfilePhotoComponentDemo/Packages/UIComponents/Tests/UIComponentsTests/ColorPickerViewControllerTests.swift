@@ -52,9 +52,6 @@ final class ColorPickerViewControllerTests: XCTestCase {
         
         wait(for: [expectation], timeout: 0.1)
     }
-    
-    // TODO: Test binding behaviour
-    // func test_whenViewModelUpdatesColor_updatesSelectedColorViewBackground()
 }
 
 // MARK: Helpers

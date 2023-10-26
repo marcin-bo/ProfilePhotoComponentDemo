@@ -9,7 +9,7 @@ import UIKit
 
 public final class ProfileIconView: UIView {
     // MARK: Data
-    private var profileIcon: ProfileIcon {
+    var profileIcon: ProfileIcon {
         didSet {
             updateView()
         }
@@ -56,7 +56,10 @@ public final class ProfileIconView: UIView {
     
     public override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
-        
+        updateSublayers()
+    }
+    
+    private func updateSublayers() {
         switch profileIcon {
         case .solid(_):
             contentView.layer.cornerRadius = contentView.frame.height * cornerRadiusRatio
@@ -138,6 +141,7 @@ extension ProfileIconView {
             disableGradientView()
             enableCustomBackground(attributes)
         }
+        updateSublayers()
     }
     
     private func updateCornerRadiusRatio(shape: ProfileIcon.Shape) {

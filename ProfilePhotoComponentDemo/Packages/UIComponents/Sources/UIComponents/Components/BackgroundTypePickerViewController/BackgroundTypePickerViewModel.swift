@@ -5,13 +5,15 @@
 //  Created by Marcin Borek on 25/10/2023.
 //
 
+import Combine
+
 public protocol BackgroundTypePickerViewModelType {
     // Input
     var currentBackgroundType: BackgroundType { get set }
     var backgroundTypeTitles: BackgroundTypeTitles { get }
     
     // Output
-    var didUpdateBackgroundType: (BackgroundType) -> Void { get }
+    var currentBackgroundTypePublisher: Published<BackgroundType>.Publisher { get }
 }
 
 public enum BackgroundType {
@@ -34,18 +36,16 @@ public struct BackgroundTypeTitles {
 
 public final class BackgroundTypePickerViewModel: BackgroundTypePickerViewModelType {
     // Output
-    public var currentBackgroundType: BackgroundType
+    @Published public var currentBackgroundType: BackgroundType
     public let backgroundTypeTitles: BackgroundTypeTitles
     
     // Input
-    public let didUpdateBackgroundType: (BackgroundType) -> Void
+    public var currentBackgroundTypePublisher: Published<BackgroundType>.Publisher { $currentBackgroundType }
     
     public init(
         currentBackgroundType: BackgroundType,
-        backgroundTypeTitles: BackgroundTypeTitles,
-        didUpdateBackgroundType: @escaping (BackgroundType) -> Void) {
+        backgroundTypeTitles: BackgroundTypeTitles) {
         self.currentBackgroundType = currentBackgroundType
         self.backgroundTypeTitles = backgroundTypeTitles
-        self.didUpdateBackgroundType = didUpdateBackgroundType
     }
 }

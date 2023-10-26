@@ -51,13 +51,11 @@ final class BackgroundTypePickerViewControllerTests: XCTestCase {
 extension BackgroundTypePickerViewControllerTests {
     private func makeSUT(
         currentBackgroundType: BackgroundType = .gradient,
-        backgroundTypeTitles: BackgroundTypeTitles,
-        didUpdateBackgroundType: ((BackgroundType) -> Void)? = nil
+        backgroundTypeTitles: BackgroundTypeTitles
     ) -> BackgroundTypePickerViewController {
         let viewModel: BackgroundTypePickerViewModelType = BackgroundTypePickerViewModel(
             currentBackgroundType: currentBackgroundType,
-            backgroundTypeTitles: backgroundTypeTitles,
-            didUpdateBackgroundType: didUpdateBackgroundType ?? { _ in }
+            backgroundTypeTitles: backgroundTypeTitles
         )
         return BackgroundTypePickerViewController(viewModel: viewModel)
     }

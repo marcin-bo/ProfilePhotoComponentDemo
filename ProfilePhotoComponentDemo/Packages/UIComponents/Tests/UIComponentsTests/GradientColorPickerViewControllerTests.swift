@@ -17,7 +17,6 @@ final class GradientColorPickerViewControllerTests: XCTestCase {
         
         XCTAssertEqual(sut.startColorPickerViewController!.titleLabel.text, "Start color")
         XCTAssertEqual(sut.startColorPickerViewController!.selectedColorView.currentColor, .green)
-        
     }
     
     func test_viewDidLoad_rendersEndColorPickerView() {
