@@ -7,7 +7,7 @@ let package = Package(
     name: "UIComponents",
     platforms: [
         .iOS(.v14),
-        .macCatalyst(.v13)
+        .macCatalyst(.v14)
     ],
     products: [
         .library(

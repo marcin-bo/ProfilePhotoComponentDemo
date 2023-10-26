@@ -16,24 +16,6 @@ public protocol BackgroundTypePickerViewModelType {
     var currentBackgroundTypePublisher: Published<BackgroundType>.Publisher { get }
 }
 
-public enum BackgroundType {
-    case solid
-    case gradient
-    case image
-}
-
-public struct BackgroundTypeTitles {
-    public let solidTitle: String
-    public let gradientTitle: String
-    public let imageTitle: String
-    
-    public init(solidTitle: String, gradientTitle: String, imageTitle: String) {
-        self.solidTitle = solidTitle
-        self.gradientTitle = gradientTitle
-        self.imageTitle = imageTitle
-    }
-}
-
 public final class BackgroundTypePickerViewModel: BackgroundTypePickerViewModelType {
     // Output
     @Published public var currentBackgroundType: BackgroundType
