@@ -165,14 +165,13 @@ extension ProfilePhotoComponentViewController {
     }
 }
 
-enum PickerType {
-    case endColor
-    case solidColor
-    case startColor
-}
-
 // MARK Opening UIColorPickerViewController
 extension ProfilePhotoComponentViewController {
+    private enum PickerType {
+        case endColor
+        case solidColor
+        case startColor
+    }
     
     /// This singleton makes sure that there can only be one UIColorPickerViewController at all times
     /// It's fixes issues on Mac Catalyst with UIColorPickerViewController
