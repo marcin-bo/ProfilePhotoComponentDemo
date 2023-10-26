@@ -44,9 +44,9 @@ extension UIViewController {
         addChild(child)
         view.addSubview(child.view)
         child.view.translatesAutoresizingMaskIntoConstraints = false
-        child.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
-        child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-        child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
+        child.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         child.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         child.didMove(toParent: self)
     }
