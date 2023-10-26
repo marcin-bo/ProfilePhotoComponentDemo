@@ -12,9 +12,11 @@ public final class ProfilePhotoComponentViewController: UIViewController {
     private let viewModel: ProfilePhotoComponentViewModelType
     private var cancellable: AnyCancellable?
     
-    var endColorPickerViewModel: ColorPickerViewModelType?
-    var solidColorPickerViewModel: ColorPickerViewModelType?
-    var startColorPickerViewModel: ColorPickerViewModelType?
+    private var endColorPickerViewModel: ColorPickerViewModelType?
+    private var solidColorPickerViewModel: ColorPickerViewModelType?
+    private var startColorPickerViewModel: ColorPickerViewModelType?
+    
+    private var profilePhotoPickerViewController: ProfilePhotoPickerViewController?
 
     // MARK: Methods
     public init(viewModel: ProfilePhotoComponentViewModelType) {
@@ -30,34 +32,15 @@ public final class ProfilePhotoComponentViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        addProfilePhotoPickerViewController(viewModel: viewModel)
-    }
-}
-
-extension UIViewController {
-    func add(_ child: UIViewController) {
-        addChild(child)
-        view.addSubview(child.view)
-        child.view.translatesAutoresizingMaskIntoConstraints = false
-        child.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        child.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        child.didMove(toParent: self)
+        let vc = makeProfilePhotoPickerViewController(viewModel: viewModel)
+        add(vc)
+        
+        self.profilePhotoPickerViewController = vc
     }
 }
 
 // MARK: ProfilePhotoPickerViewController
 extension ProfilePhotoComponentViewController {
-    private func addProfilePhotoPickerViewController(
-        viewModel: ProfilePhotoComponentViewModelType
-    ) {
-        let vc = makeProfilePhotoPickerViewController(
-            viewModel: viewModel
-        )
-        add(vc)
-    }
-    
     private func makeProfilePhotoPickerViewController(
         viewModel: ProfilePhotoComponentViewModelType
     ) -> ProfilePhotoPickerViewController {
@@ -175,7 +158,7 @@ extension ProfilePhotoComponentViewController {
     }
     
     private func openColorPicker(with currentColor: UIColor, for pickerType: PickerType) {
-        let picker = ColorPickerSingleton.shared
+        let picker = getColorPicker(pickerType: pickerType)
         picker.selectedColor = currentColor
         
         // Subscribing selectedColor property changes
@@ -195,6 +178,41 @@ extension ProfilePhotoComponentViewController {
             }
         
         self.present(picker, animated: true, completion: nil)
+    }
+    
+    private func getColorPicker(pickerType: PickerType) -> UIColorPickerViewController {
+#if targetEnvironment(macCatalyst)
+        let colorPicker = ColorPickerSingleton.shared
+        colorPicker.modalPresentationStyle = .popover
+        colorPicker.popoverPresentationController?.canOverlapSourceViewRect = true
+        colorPicker.popoverPresentationController?.sourceView = getColorPickerSourceView(pickerType: pickerType)
+        colorPicker.popoverPresentationController?.permittedArrowDirections = .any
+        return colorPicker
+#else
+        ColorPickerSingleton.shared
+#endif
+    }
+    
+    private func getColorPickerSourceView(pickerType: PickerType) -> UIView? {
+        switch pickerType {
+        case .endColor:
+            return self
+                .profilePhotoPickerViewController?
+                .gradientColorPickerViewController?
+                .endColorPickerViewController?
+                .selectedColorView
+        case .solidColor:
+            return self
+                .profilePhotoPickerViewController?
+                .solidColorPickerViewController?
+                .selectedColorView
+        case .startColor:
+            return self
+                .profilePhotoPickerViewController?
+                .gradientColorPickerViewController?
+                .startColorPickerViewController?
+                .selectedColorView
+        }
     }
 }
 
